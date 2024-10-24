@@ -1,7 +1,7 @@
 import {Command} from "commander";
 import * as dotenv from "dotenv";
 import {cleanEnv, str} from "envalid";
-import {Address, Provider, TransactionRequestLike, TxParams, WalletUnlocked} from "fuels";
+import {Address, formatUnits, Provider, TransactionRequestLike, TxParams, WalletUnlocked} from "fuels";
 import {buildPoolId, getAssetId, MiraAmm, ReadonlyMiraAmm} from "../../src";
 import {futureDeadline} from "./utils";
 
@@ -113,7 +113,18 @@ program
     }
     let [symbol0, symbol1] = lpAssetInfo.name.split('-', 2);
     symbol1 = symbol1.substring(0, symbol1.length - 3);
+
+    const reserve0Decimal = parseFloat(formatUnits(meta.reserve0, meta.decimals0));
+    const reserve1Decimal = parseFloat(formatUnits(meta.reserve1, meta.decimals1));
+
     console.log("id:", meta.poolId[0].bits, meta.poolId[1].bits, meta.poolId[2]);
+    if (meta.poolId[2]) {
+      // is stable
+      console.log('Stable pool, no price yet')
+    } else {
+      console.log("price:", reserve0Decimal / reserve1Decimal, symbol0, 'per', symbol1);
+      console.log("price:", reserve1Decimal / reserve0Decimal, symbol1, 'per', symbol0);
+    }
     console.log("reserve0:", parseFloat(meta.reserve0.toString()) / Math.pow(10, meta.decimals0), symbol0);
     console.log("reserve1:", parseFloat(meta.reserve1.toString()) / Math.pow(10, meta.decimals1), symbol1);
     console.log("liquidity:", meta.liquidity[1].toString());
