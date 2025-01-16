@@ -9,8 +9,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "build": "tsc",
-    "postinstall": "cd node_modules/mira-dex-ts && npm install && npm run build"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "miradeployer@gmail.com",
