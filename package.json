@@ -9,9 +9,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "build": "tsc",
-    "prepare": "pnpm run build",
-    "pub": "pnpm publish --access public"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "miradeployer@gmail.com",
